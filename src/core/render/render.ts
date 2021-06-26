@@ -5,8 +5,8 @@ import { assets } from '../../assets'
 
 const type = PIXI.utils.isWebGLSupported() ? 'WebGL' : 'canvas'
 
-const app = new PIXI.Application({
-  backgroundColor: 0xa7f99f,
+export const app = new PIXI.Application({
+  backgroundColor: 0x000000,
   width: 1400,
   height: 900,
   autoDensity: true,

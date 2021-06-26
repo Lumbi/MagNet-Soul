@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js'
-import TemplateMapData from '../assets/maps/stage1'
+import TemplateMapData, { width } from '../assets/maps/stage1'
 import Physics from '../core/physics/physics'
 import { MyState, MyPoint } from '../main'
 import { mapAssets, enemyTiles } from '../assets'
@@ -8,12 +8,12 @@ import * as Enemy from '../enemy/enemy'
 import * as PolaritySwitcher from '../polarity/polarity-switcher'
 import Vector from '../core/math/vector'
 
-export type Map = typeof TemplateMapData & { startPoint: MyPoint }
+export type Map = typeof TemplateMapData
 type Layer = typeof TemplateMapData.layers[0]
 
-export const loadMap = (state: MyState, map: Map) => {
+export const loadMap = (state: MyState, map: Map, name: string) => {
   map.layers.forEach((layer) => {
-    const asset = mapAssets[`${map.name}-${layer.name}`]
+    const asset = mapAssets[`${name}-${layer.name}`]
     switch (layer.name) {
       case 'terrain':
         loadTerrainLayer(state, map, layer)
@@ -23,7 +23,7 @@ export const loadMap = (state: MyState, map: Map) => {
         break
       case 'front-parallax':
       case 'mid-parallax':
-      case 'back-parallax':
+      // case 'back-parallax':
         loadParallaxLayer(state, map, layer, PIXI.BaseTexture.from(asset))
         break
       case 'enemy':
@@ -72,6 +72,15 @@ const loadTerrainLayer = (state: MyState, map: Map, layer: Layer) => {
       })
       Physics.World.addBody(state.physicsWorld, body)
     })
+
+    // Playtest
+
+    // areas.forEach(({ x, y, length }) => {
+    //   const graphic = new PIXI.Graphics()
+    //   graphic.beginFill(0x000000)
+    //   graphic.drawRect(x * 16, y * 16, length * 16, 16)
+    //   state.renderStage.addChild(graphic)
+    // })
   }
 }
 

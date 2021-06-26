@@ -3,7 +3,7 @@ import * as Game from './core/game/game'
 import { Entity, Component, System } from './arch/arch'
 import { Time } from './core/time/time'
 import Physics from './core/physics/physics'
-import { renderFrame, initializeRendering, stage, initializeCamera } from './core/render/render'
+import { renderFrame, initializeRendering, stage, initializeCamera, app } from './core/render/render'
 import Vector from './core/math/vector'
 import { DrawSpritesSystem } from './systems/draw-sprites-system'
 import { CameraSystem } from './systems/camera-system'
@@ -176,7 +176,7 @@ export type Config = {
 }
 export const config: Config = {
   frameRate: 40,
-  maps: { stage1, stage2 },
+  maps: { stage1, stage2: stage2 as any },
 }
 
 const initializeGame = (config) => {
@@ -195,7 +195,24 @@ export const playSound = (...name: string[]) => {
   }
 }
 
+const startPointForScreen = (screen: GameScreen): Vector => {
+  switch (screen) {
+    case 'stage1': return new Vector(2, 14)
+    case 'stage2': return new Vector(3, 16)
+    default: return new Vector(0, 0)
+  }
+}
+
 export const initializeScreen = (screen: GameScreen) => {
+  switch (screen) {
+    case 'stage1':
+      app.renderer.backgroundColor = 0x87ceeb
+      break;
+    case 'stage2':
+      app.renderer.backgroundColor = 0x111111
+      break;
+  }
+
   state.currentScreen = screen
 
   destroy('player', state)
@@ -211,9 +228,9 @@ export const initializeScreen = (screen: GameScreen) => {
   state.renderStage.removeChildren()
   engine.world.bodies = []
 
-  loadMap(state, config.maps[screen]) // TODO: Load based on screen
+  loadMap(state, config.maps[screen], screen) // TODO: Load based on screen
   initializeCamera(state)
-  Player.create(state, config.maps[screen].startPoint)
+  Player.create(state, startPointForScreen(screen))
 }
 document.addEventListener('keydown', (e) => {
   e.key === '9' && advanceStage(state.currentScreen === 'stage1' ? 'stage1' : 'stage2')

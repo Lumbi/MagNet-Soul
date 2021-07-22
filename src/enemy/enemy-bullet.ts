@@ -36,6 +36,7 @@ export const create = (state: MyState, position: Vector, direction: Vector): Ent
   graphics.drawCircle(0, 0, radius+2)
   graphics.beginFill(0x111111)
   graphics.drawCircle(0, 0, radius)
+  graphics.position.set(position.x, position.y)
   state.sprites.set(bulletId, graphics)
   state.renderStage.addChild(graphics)
 

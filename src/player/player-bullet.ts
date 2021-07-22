@@ -40,6 +40,7 @@ export const create = (state: MyState, position: Vector, direction: Vector): Ent
   const graphics = new PIXI.Graphics()
   graphics.beginFill(0xFFFFFF)
   graphics.drawCircle(0, 0, radius)
+  graphics.position.set(position.x, position.y)
   state.sprites.set(bulletId, graphics)
   state.renderStage.addChild(graphics)
 

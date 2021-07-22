@@ -198,7 +198,7 @@ export const playSound = (...name: string[]) => {
 const startPointForScreen = (screen: GameScreen): Vector => {
   switch (screen) {
     case 'stage1': return new Vector(2, 14)
-    case 'stage2': return new Vector(3, 16)
+    case 'stage2': return new Vector(1, 3)
     default: return new Vector(0, 0)
   }
 }

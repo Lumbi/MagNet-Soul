@@ -14,7 +14,7 @@ export const polarityColor = (polarity: Polarity): number => {
     case 'positive':
       return 0xfc4404
     case 'negative':
-      return 0x6ebffd
+      return 0x269ffc
     case 'neutral':
       return 0x000000
   }
